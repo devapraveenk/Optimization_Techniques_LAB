@@ -1,22 +1,45 @@
-def multiply(A, B): 
-    r1 = len(A)
-    c1 = len(A[0]) 
-    r2 = len(B)
-    c2 = len(B[0]) 
-    if c1 != r2: 
-        print("Cannot Be Multiplied")
-        exit()
-    res = [[0] * c2 for i in range(r1)]
-    for i in range(r1): 
-        for j in range(c2): 
-            for k in range(c1):
-                res[i][j] += A[i][k] * B[k][j] 
-    return res 
+import numpy as np
+import time
 
-A = [[1, 2, 3],
-     [4, 5, 6]] 
-B = [[10, 11],
-     [20, 21],
-     [30, 31]] 
-res = multiply(A, B)
-print(res)
+# Smaller matrices for faster execution
+n, m = 100, 100
+A = np.random.rand(n, m)
+B = np.random.rand(n, m)
+
+# Manual addition with loops
+start = time.time()
+C = [[A[i][j] + B[i][j] for j in range(m)] for i in range(n)]
+end = time.time()
+print("Manual Addition Time:", end - start)
+
+# Optimized addition using NumPy
+start = time.time()
+C_np = A + B
+end = time.time()
+print("NumPy Addition Time:", end - start)
+
+# Manual multiplication with loops (naive)
+start = time.time()
+result = [
+    [sum(A[i][k] * B[k][j] for k in range(m)) for j in range(m)] for i in range(n)
+]
+end = time.time()
+print("Naive Multiplication Time:", end - start)
+
+# NumPy multiplication
+start = time.time()
+result_np = np.dot(A, B)
+end = time.time()
+print("NumPy Multiplication Time:", end - start)
+
+# Manual transpose
+start = time.time()
+transpose = [[A[j][i] for j in range(m)] for i in range(n)]
+end = time.time()
+print("Manual Transpose Time:", end - start)
+
+# NumPy transpose
+start = time.time()
+transpose_np = np.transpose(A)
+end = time.time()
+print("NumPy Transpose Time:", end - start)

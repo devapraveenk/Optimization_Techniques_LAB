@@ -1,0 +1,4 @@
+numpy
+matplotlib
+mplot3d-dragger
+PuLP
